@@ -1,7 +1,6 @@
 import { createApp, ref } from 'vue'
 import App from './App.vue'
 import { isReady, setupRouter } from './router'
-import 'virtual:svg-icons-register'
 import 'element-plus/dist/index.css';
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import { ElLoading, ClickOutside } from 'element-plus';

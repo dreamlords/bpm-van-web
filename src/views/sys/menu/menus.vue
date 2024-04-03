@@ -6,13 +6,9 @@
           <el-input style="width: 200px" size="default" placeholder="菜单名称" v-model="menuTitleKey"></el-input>
         </div>
 
-        <el-button size="default" plain style="vertical-align: middle; margin-left: 12px" type="info" @click="expendMenu">
-          <SVGIcon style="width: 1em; height: 1em" name="Expand" /><span style="margin-left: 4px">展开</span>
-        </el-button>
-        <el-button size="default" plain style="vertical-align: middle" type="info" @click="shrinkMenu">
-          <SVGIcon style="width: 1em; height: 1em" name="Shrink" /><span style="margin-left: 4px" >收缩</span>
-        </el-button>
-        <el-button size="default" plain style="vertical-align: middle" type="primary" @click="addMenu" :icon="Plus">新增</el-button>
+        <el-button plain style="vertical-align: middle; margin-left: 12px" type="info" :icon="Expand" @click="expendMenu">展开</el-button>
+        <el-button plain style="vertical-align: middle" type="info" :icon="Shrink" @click="shrinkMenu">收缩</el-button>
+        <el-button plain style="vertical-align: middle" type="primary" @click="addMenu" :icon="Plus">新增</el-button>
         <el-popconfirm title="确定删除?" confirmButtonText="确定" cancelButtonText="取消" @confirm="batchDeleteMenu">
           <template #reference>
             <el-button size="default" plain style="vertical-align: middle" type="danger" :disabled="selectedMenus.length === 0" :icon="Delete">删除</el-button>
@@ -80,13 +76,11 @@
 <script lang="ts" setup>
 import {
   computed,
-  inject,
   nextTick,
   Ref,
   ref,
   onBeforeMount, toRaw,
 } from "vue";
-import SVGIcon from "@/components/common/SVGIcon.vue";
 import {
   ElButton,
   ElIcon,
@@ -95,18 +89,19 @@ import {
   ElPopconfirm,
   ElTable,
   ElTableColumn,
-  ElTag, ElScrollbar, TableColumnCtx,
+  ElTag, TableColumnCtx,
 } from "element-plus";
 import * as MenuApi from "@/api/sys/menu";
-import {filterDataWithTitle, getDeviceType, toTree} from "@/utils/common";
+import { filterDataWithTitle, toTree } from "@/utils/common";
 import { useMenuData } from "@/service/system/menu";
 import { Plus, Edit, Delete, Download, } from "@element-plus/icons-vue";
 import MenuCreateModal from "./modal/MenuCreateModal.vue";
-import {installLayoutContentRoute, uninstallLayoutContentRoute} from "@/router";
+import { installLayoutContentRoute, uninstallLayoutContentRoute } from "@/router";
 import * as UserApi from "@/api/sys/user";
 import { useMenuOptions } from "@/config/app.hooks";
-
-const deviceType = getDeviceType()
+import Expand from '@/assets/icons/Expand.svg'
+import Shrink from '@/assets/icons/Shrink.svg'
+import SVGIcon from "@/components/common/SVGIcon.vue";
 
 const loading = ref(true);
 const tableRef = ref<InstanceType<typeof ElTable>>()

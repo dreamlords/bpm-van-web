@@ -14,7 +14,7 @@
           <el-button size="default" plain :icon="Delete" type="danger" :loading="loading" :disabled="selectedRoles.length === 0">删除</el-button>
         </template>
       </el-popconfirm>
-      <el-button size="default" plain :icon="Download" type="warning" @click="addRole">导出</el-button>
+      <el-button size="default" plain :icon="Download" type="warning">导出</el-button>
     </div>
 
     <div style="width: 100%; height: calc(100% - 32px - 10px); margin-top: 10px">
@@ -29,7 +29,7 @@
         table-layout="auto"
         stripe border
         @row-click="handleRowClick"
-        @selection-change="v => selectedRoles = v"
+        @selection-change="(v: any) => selectedRoles = v"
       >
         <el-table-column type="selection" align="center" header-align="center" />
         <el-table-column prop="id" label="#" width="50" :resizable="false" align="center" header-align="center" />

@@ -5,12 +5,8 @@
         <div>
           <el-input style="width: 200px;" placeholder="部门名称" v-model="deptTitleKey"></el-input>
         </div>
-        <el-button plain style="vertical-align: middle; margin-left: 12px;" type="info" @click="expand">
-          <SVGIcon style="width: 1em; height: 1em" name="Expand" /><span style="margin-left: 4px;">展开</span>
-        </el-button>
-        <el-button plain style="vertical-align: middle;" type="info" @click="shrink">
-          <SVGIcon style="width: 1em; height: 1em" name="Shrink" /><span style="margin-left: 4px;">收缩</span>
-        </el-button>
+        <el-button plain style="vertical-align: middle; margin-left: 12px;" type="info" :icon="Expand" @click="expand">展开</el-button>
+        <el-button plain style="vertical-align: middle;" type="info" :icon="Shrink" @click="shrink">收缩</el-button>
         <el-button plain type="primary" @click="addItem" :icon="Plus">新增</el-button>
         <el-popconfirm
           title="确定删除?"
@@ -84,8 +80,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, nextTick, onBeforeMount, provide, toRaw, Ref } from "vue";
-import SVGIcon from "@/components/common/SVGIcon.vue";
+import { ref, computed, nextTick, onBeforeMount, provide, toRaw } from "vue";
 import {
   ElTable,
   ElTableColumn,
@@ -100,6 +95,8 @@ import DeptModal from "./modal/DeptModal.vue";
 import { useDeptInfo } from "@/service/system/dept";
 import UserViewer from '@/components/common/viewer/user/UserViewer.vue'
 import { userMapKey } from '@/config/app.keys'
+import Expand from '@/assets/icons/Expand.svg'
+import Shrink from '@/assets/icons/Shrink.svg'
 
 
 const tableRef = ref<InstanceType<typeof ElTable>>();
