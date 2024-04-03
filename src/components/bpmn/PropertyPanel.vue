@@ -16,7 +16,7 @@
           <div id="task-listener-panel"></div>
         </div>
       </el-collapse-item>
-      <el-collapse-item name="execution-listener" v-show="bpmnSelectedElem?.type?.endsWith('UserTask') || bpmnSelectedElem?.type?.endsWith('SequenceFlow')">
+      <el-collapse-item name="execution-listener" v-show="showExecutionListener">
         <template #title>
           <div class="collapse-title"><s-v-g-icon style="width: 1em; height: 1em" name="Notification" /><span style="margin-left: 6px">执行监听</span></div>
         </template>
@@ -211,6 +211,35 @@ const showPageConfig = computed<boolean>(() => {
   return bo?.sourceRef?.$type === 'bpmn:UserTask' && !!bo?.conditionExpression
 })
 
+const showExecutionListener = computed<boolean>(() => {
+  const selectedElem = toRaw(bpmnSelectedElem.value)
+  if (!selectedElem) {
+    return false
+  }
+  return [
+    "bpmn:Task",
+    "bpmn:ServiceTask",
+    "bpmn:UserTask",
+    "bpmn:BusinessRuleTask",
+    "bpmn:ScriptTask",
+    "bpmn:ReceiveTask",
+    "bpmn:ManualTask",
+    "bpmn:ExclusiveGateway",
+    "bpmn:SequenceFlow",
+    "bpmn:ParallelGateway",
+    "bpmn:InclusiveGateway",
+    "bpmn:EventBasedGateway",
+    "bpmn:StartEvent",
+    "bpmn:IntermediateCatchEvent",
+    "bpmn:IntermediateThrowEvent",
+    "bpmn:EndEvent",
+    "bpmn:BoundaryEvent",
+    "bpmn:CallActivity",
+    "bpmn:SubProcess",
+    "bpmn:Process"
+  ].includes(selectedElem.type)
+})
+
 interface DialogInfo<T> {
   visible: boolean
   formData: T
@@ -241,7 +270,7 @@ const fieldDialogInfo = ref<DialogInfo<InjectField>>({
   title: '',
   formData: {
     name: '',
-    type: undefined,
+    type: 'string',
     value: ''
   }
 })
@@ -251,8 +280,8 @@ const executionDialogInfo = ref<DialogInfo<ExecutionFormData>>({
   visible: false,
   title: '',
   formData: {
-    event: undefined,
-    type: undefined,
+    event: 'start',
+    type: 'class',
     value: '',
     fields: []
   }
